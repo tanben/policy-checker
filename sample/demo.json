@@ -1,0 +1,23 @@
+[
+    {"effect": "allow"
+        ,"actions":["createProject","deleteProject"]
+        ,"resources":[ "proj/sample", "proj/demo"]
+    }
+     , {
+        "effect": "allow"
+        ,"actions":["updateProjectName"]
+        ,"resources":[ "proj/demo;tag1"]
+    }
+  
+  
+    , {
+        "effect": "deny"
+        ,"actions":["deleteProject"]
+        ,"resources":[ "proj/*"]
+    }
+    , {
+        "effect": "allow"
+        ,"actions":["updateTags"]
+        ,"resources":[ "proj/*"]
+    }
+]

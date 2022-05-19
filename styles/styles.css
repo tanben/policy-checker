@@ -1,0 +1,24 @@
+
+table {
+  border-collapse: collapse; 
+  font-family: helvetica;
+  width:800px;
+}
+td, th {border:  1px solid;
+      padding: 10px;
+      min-width: 250px;
+      background: white;
+      box-sizing: border-box;
+      text-align: left;
+}
+thead th {
+  text-align: center;
+  background-color:#a6cee3;
+  
+}
+table td:nth-child(2){
+  min-width:500px;
+}
+div.graph_container {
+  width:55%
+}

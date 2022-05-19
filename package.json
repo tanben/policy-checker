@@ -1,0 +1,21 @@
+{
+  "name": "policy-checker",
+  "version": "1.0.0",
+  "description": "LaunchDarkly policy for custom roles permission checker.",
+  "scripts": {
+    "sample": "node index.js ./sample/input.json && open output/report.html",
+    "test": "mocha",
+    "dev": "mocha --watch test"
+    
+  },
+  "author": "Ben Tan",
+  "license": "Apache 2.0",
+  "dependencies": {
+    "node-json2html": "^2.2.2"
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0",
+    "sinon": "^14.0.0"
+  }
+}

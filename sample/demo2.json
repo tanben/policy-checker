@@ -1,0 +1,119 @@
+
+[
+    {
+        "effect": "allow"
+        ,"actions":["deleteScimConfig", "deleteSubscription", "getPaymentCard" ]
+        ,"resources":[ "acct"]
+    }
+    , {
+        "effect": "deny"
+        ,"actions":["createScimConfig","deleteAccount","createSamlConfig" ,"getPaymentCard"]
+        ,"resources":[ "acct"]
+    }
+    , {
+        "effect": "allow"
+        ,"actions":["createProject","deleteProject"]
+        ,"resources":[ "proj/sample", "proj/demo"]
+    }
+     , {
+        "effect": "allow"
+        ,"actions":["updateProjectName"]
+        ,"resources":[ "proj/demo;tag1"]
+    }
+  
+  
+    , {
+        "effect": "deny"
+        ,"actions":["deleteProject"]
+        ,"resources":[ "proj/*"]
+    }
+    , {
+        "effect": "allow"
+        ,"actions":["updateTags"]
+        ,"resources":[ "proj/*"]
+    }
+    , {
+        "effect": "deny"
+        ,"actions":["deleteProject"]
+        ,"resources":[ "proj/*;tag1"]
+    }
+    , {
+        "effect": "allow"
+        ,"actions":["createEnvironment", "deleteEnvironment"]
+        ,"resources":[ "proj/*:env/development"]
+    }
+    , {
+        "effect": "allow"
+        ,"actions":[ "updateColor"]
+        ,"resources":[ "proj/*:env/*"]
+    }
+  , {
+        "effect": "allow"
+        ,"actions":[ "createSegment", "updateDescription", "updateExcluded"]
+        ,"resources":[ "proj/*:env/*:segment/*"]
+    }
+    , {
+        "effect": "deny"
+        ,"actions":[ "createSegment"]
+        ,"resources":[ "proj/*:env/*:segment/*"]
+    }
+      , {
+        "effect": "allow"
+        ,"actions":[ "deleteUser"]
+        ,"resources":[ "proj/*:env/*:user/*"]
+    }
+    , {
+        "effect": "allow"
+        ,"actions":["createMember" ]
+        ,"resources":[ "member/*"]
+    }
+    , {
+        "effect": "allow"
+        ,"actions":["updatePolicy" ]
+        ,"resources":[ "role/*"]
+    }
+    , {
+        "effect": "allow"
+        ,"actions":["viewTeam","updateTeamCustomRoles" ]
+        ,"resources":[ "team/*"]
+    }
+    , {
+        "effect": "deny"
+        ,"actions":["updateTeamCustomRoles" ]
+        ,"resources":[ "team/*"]
+    }
+     , {
+        "effect": "allow"
+        ,"actions":["resetAccessToken" ]
+        ,"resources":[ "member/*:token/*"]
+    }
+      , {
+        "effect": "allow"
+        ,"actions":["createAccessToken" ]
+        ,"resources":[ "service-token/*"]
+    }
+    ,{  "effect": "allow"
+        ,"actions":["updateSelector" ]
+        ,"resources":[ "proj/*:metric/*"]
+    }
+     ,{  "effect": "allow"
+        ,"actions":["updateTags" ]
+        ,"resources":[ "webhook/*"]
+    }
+      ,{  "effect": "allow"
+        ,"actions":["createIntegration" ]
+        ,"resources":[ "integration/*"]
+    }
+    ,{  "effect": "allow"
+        ,"actions":["createRelayAutoConfiguration" ]
+        ,"resources":[ "relay-proxy-config/*"]
+    }
+    ,{  "effect": "allow"
+        ,"actions":["createDestination" ]
+        ,"resources":[ "proj/*:env/*:destination/*"]
+    }
+      ,{  "effect": "allow"
+        ,"actions":["createCodeRefsRepository" ]
+        ,"resources":[ "code-reference-repository/*"]
+    }
+]
