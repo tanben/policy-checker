@@ -26,10 +26,10 @@ function main() {
         } = policy.applyResourceActions(procActions);
         
         
-        utils.writeToFile(JSON.stringify(policyInput,null,2), 'output/data.json');
-        utils.writeToFile(JSON.stringify(graph, null, 2), 'output/graph.json');
-        utils.writeToFile(JSON.stringify(resourceActions, null, 2), 'output/resourceActions.json');
-        utils.generateHTMLReport(resourceActions, graph,  'output/report.html');
+        utils.writeToFile(JSON.stringify(policyInput,null,2), 'data.json');
+        utils.writeToFile(JSON.stringify(graph, null, 2), 'graph.json');
+        utils.writeToFile(JSON.stringify(resourceActions, null, 2), 'resourceActions.json');
+        utils.generateHTMLReport(resourceActions, graph,  'report.html');
     })();
 
 
