@@ -1,4 +1,14 @@
 [
+    {   "effect": "allow"
+        ,"actions":["updateIncludeInSnippetByDefault"]
+        ,"notResources":[ "proj/sample"]
+    }
+     ,
+     {   "effect": "deny"
+        ,"notActions":["createProject"]
+        ,"resources":[ "proj/*;tag2"]
+    }
+     ,
     {"effect": "allow"
         ,"actions":["createProject","deleteProject"]
         ,"resources":[ "proj/sample", "proj/demo"]

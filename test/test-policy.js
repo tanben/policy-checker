@@ -9,7 +9,57 @@ const expect = chai.expect;
 
 
 describe('Test policy', function() {
-  
+    it('Must not include notAction list', function(done) {
+        
+        const samplePolicy=[
+            {
+                actions:["*"],
+                effect:"allow",
+                resources: ["proj/demo"]
+            }
+            ,
+            {
+                notActions:["updateProjectName"],
+                effect:"deny",
+                resources: ["proj/demo"]
+            }
+            ];
+
+            
+        let parsed = policy.createResourceActions(samplePolicy);
+        assert.isNotEmpty(parsed)
+        // console.log(parsed)
+        assert.notIncludeMembers(parsed['proj/demo'].deny, ['updateProjectName']);
+        assert.includeMembers(parsed['proj/demo'].allow, Object.keys(utils.getResourceActions('proj').actions));
+
+        done();
+    });
+    it('Must create notResources entries', function(done) {
+        
+        const samplePolicy=[
+            {
+                actions:["*"],
+                effect:"allow",
+                notResources: ["proj/sandbox-b"]
+            }
+            ,
+            {
+                notActions:["updateProjectName"],
+                effect:"deny",
+                resources: ["proj/sandbox-b", "proj/sandbox-a"]
+            }
+            ];
+
+            
+        let parsed = policy.createResourceActions(samplePolicy);
+        assert.isNotEmpty(parsed)
+        // console.log(parsed)
+        assert.notIncludeMembers(parsed['proj/sandbox-b'].deny, ['updateProjectName']);
+        assert.includeMembers(parsed['!proj/sandbox-b'].allow, Object.keys(utils.getResourceActions('proj').actions));
+
+        done();
+    });
+
     it('Must return the actions for proj/*', function(done) {
         const resourceName='proj/*';
         const samplePolicy=[
@@ -161,6 +211,30 @@ describe('Test policy', function() {
         assert.hasAllKeys(match, ['proj/demo1', 'proj/demo-key;tag1,tag2']);
         done();
     });
+    it('Must not match notResources allow actions ', function (done) {
+
+        const samplePolicy = [
+            {
+                actions: ["updateTags"],
+                effect: "allow",
+                resources: ['proj/sandbox-a', 'proj/sandbox-b', 'proj/sandbox-c']
+            }
+            
+            , {
+                actions: ["viewProject"],
+                effect: "allow",
+                notResources: ['proj/sandbox-b']
+            }
+        ];
+        let resourceActions = policy.createResourceActions(samplePolicy);
+        let match = policy.findMatchingResourceActions('!proj/sandbox-b', resourceActions);
+        assert.includeMembers(Object.keys(match), ['proj/sandbox-a','proj/sandbox-c'])
+
+        match = policy.findMatchingResourceActions('!proj/sandbox-?', resourceActions);
+        assert.isEmpty(Object.keys(match))
+
+        done();
+    });
 
     it('Must Apply resource actions for matching regex proj/*', function (done) {
 
@@ -195,6 +269,27 @@ describe('Test policy', function() {
         assert.includeMembers(graph['proj/demo'], ['proj/demo;tag1,tag2']);
         assert.equal(graph['proj/demo;tag1,tag2'].length, 0);
         assert.includeMembers(resourceActions['proj/demo'].allow, ['updateProjectName', 'viewProject']);
+        done();
+    });
+    it('Must not include in graph  proj/* for notResources', function (done) {
+
+        const samplePolicy = [{
+                actions: ["viewProject"],
+                effect: "allow",
+                resources: ['proj/*','proj/sandbox-a','proj/sandbox-b']
+            },
+            {
+                actions: ['createProject'],
+                effect: "deny",
+                notResources: ['proj/sandbox-a']
+            },
+        ];
+        let procActions = policy.createResourceActions(samplePolicy);
+        let {graph, resourceActions} = policy.applyResourceActions(procActions);
+        // console.log(JSON.stringify(graph,null,2));
+        assert.includeMembers(graph["!proj/sandbox-a"],  ["proj/sandbox-b"]);
+        assert.notIncludeMembers(graph['proj/*'],  ["!proj/sandbox-a"]);
+        assert.notIncludeMembers(graph['!proj/sandbox-a'],  ["proj/*"]);
         done();
     });
      it('Must Apply DENY resource actions for matching regex proj/*', function (done) {

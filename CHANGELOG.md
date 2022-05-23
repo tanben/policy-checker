@@ -1,6 +1,10 @@
+- 2022-05-23 -- @v1.1.0
+    - Support notActions and notResources
+    - Refactor and cleanup
+    - Update documentation 
 
 
-- 2022-05-19 --  @v1.0
+- 2022-05-19 --  @v1.0.0
     - initial version
     - Evaluate resource permissions
     - Display resources with overlapping permissions

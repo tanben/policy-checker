@@ -1,19 +1,96 @@
 # Policy Checker
 
-Polcy checker is a CLI for evaluating and detecting access permission overlap in LaunchDarkly policy (for custom roles).
-
-For more details on how to create policies see doc [here](https://docs.launchdarkly.com/home/members/role-create).
+Policy checker is a CLI for evaluating and detecting overlaps in your LaunchDarkly custom role policy. 
 
 
-![](./img/graph.jpg)
-![](./img/table.jpg)
+![](./img/overview.jpg)
+
+The report contains two sections
+- Resource Graph. Displays the resources that have overlapping permissions.
+- Permissions Table. The Table contains extrapolated **Allowed** permissions for all resources.
+
+### Resource Graph
+The resource graph shows overlapping statements in your policy. 
+
+Using this sample Policy JSON:
+
+*file: policy.json*
+```json
+[
+  {
+    "effect": "allow",
+    "actions": [
+      "createProject",
+      "deleteProject"
+    ],
+    "resources": [
+      "proj/*"
+    ]
+  },
+  {
+    "effect": "allow",
+    "actions": [
+      "updateTags"
+    ],
+    "resources": [
+      "proj/demo"
+    ]
+  }
+]
+```
+>  See  [Understanding  policies](https://docs.launchdarkly.com/home/members/role-policies#understanding-policies) for details on Policy attributes.
+
+The above Policy would produce a graph showing resource expression  `proj/*` matching `proj/demo` with the permissions table showing **Allowed** actions explicitly defined for `proj/demo` and extrapolated from `proj/*`.
+
+*file: report.html*
+
+![](./img/sample.jpg)
+
+
+### Permissions Table
+The permissions table shows **ALLOWED** actions listed in the **resourceActions.json**. 
+> Deny action sets are not displayed.
+
+
+*file: resourceActions.json*
+```json
+{
+  "proj/*": {
+    "resourceString": "proj/*",
+    "type": "proj",
+    "allow": [
+      "createProject",
+      "deleteProject"
+    ],
+    "deny": []
+  },
+  "proj/demo": {
+    "resourceString": "proj/demo",
+    "type": "proj",
+    "allow": [
+      "updateTags",
+      "createProject",
+      "deleteProject"
+    ],
+    "deny": []
+  }
+}
+```
+
 ## Features
 - Evaluate resource permissions
 - Display resources with overlapping permissions
-see [CHANGELOG.md](changelog.md) for details.
+see [CHANGELOG.md](CHANGELOG.md) for details.
 
 
 # Getting Started
+## Requirements
+* Node.JS >= 16.14.0
+
+## Built With
+* [JSON2HTML](https://json2html.com/)
+* [Google Chart](https://developers.google.com/chart)
+
 
 ## Installation
 1. Install NodeJS packages.
@@ -22,16 +99,18 @@ $> npm install
 ```
 
 
-## Usage 
+# Usage 
 Run the policy checker using this sample command, this will generate the reports in `./output` directory.
-
-``` 
-node index.js <Policy JSON file>
-```
 To run using sample policy
 ```
 npm run sample 
 ```
+``` 
+node index.js <Policy file JSON>
+```
+
+> Note: Use the LaunchDarkly advanced editor to copy and save your policy, see doc [here](https://docs.launchdarkly.com/home/members/role-policies#writing-policies-in-the-advanced-editor)
+
 
 ### Run tests   
 ```
@@ -58,130 +137,18 @@ npm run dev
 
 ## Output 
 The following reports are generated in the `./output` directory
-* data.json  - your input policy file
+* data.json  - LaunchDarkly policy JSON file
 
-* graph.json - list overlapping resources in your policy used in the graph in the report
+* graph.json - contains resources and list of resources overlapps
 
-* resourceActions.json - contains the resource and evaluated permissions that are listed in the HTML table.
-* report.html - generated HTML report
+* resourceActions.json - contains the resource and extrapolated permissions which are rendered on the HTML table
+
+* report.html -  HTML report
 
 
-## Built With
-* [Sinon API Doc](https://sinonjs.org/releases/latest/)
-* [Chai API Doc](https://www.chaijs.com/api/)
-* [JSON2HTML](https://json2html.com/)
-## Doc
+# Documentation
+
 ### LaunchDarkly
-[Role Policies](https://docs.launchdarkly.com/home/members/role-policies)
-[Using Actions](https://docs.launchdarkly.com/home/members/role-actions)
+* [Role Policies](https://docs.launchdarkly.com/home/members/role-policies)
 
-## Sample files
-### Sample Policy file (input file)
-```
-        [
-            {
-                "effect": "allow",
-                "actions": [
-                "createProject",
-                "deleteProject"
-                ],
-                "resources": [
-                "proj/sample",
-                "proj/demo"
-                ]
-            },
-            {
-                "effect": "allow",
-                "actions": [
-                "updateProjectName"
-                ],
-                "resources": [
-                "proj/demo;tag1"
-                ]
-            },
-            {
-                "effect": "deny",
-                "actions": [
-                "deleteProject"
-                ],
-                "resources": [
-                "proj/*"
-                ]
-            },
-            {
-                "effect": "allow",
-                "actions": [
-                "updateTags"
-                ],
-                "resources": [
-                "proj/*"
-                ]
-            }
-        ]
-
-```
-### Sample graph.json (generated)
-```
-        {
-        "proj/sample": [],
-        "proj/demo": [
-            "proj/demo;tag1"
-        ],
-        "proj/demo;tag1": [],
-        "proj/*": [
-            "proj/sample",
-            "proj/demo",
-            "proj/demo;tag1"
-        ]
-        }
-```
-
-### Sample resourceActions.json (generated)
-```
-    {
-        "proj/sample": {
-            "resourceString": "proj/sample",
-            "type": "proj",
-            "allow": [
-                "createProject",
-                "updateTags"
-            ],
-            "deny": [
-                 "deleteProject"
-            ]
-        },
-        "proj/demo": {
-            "resourceString": "proj/demo",
-            "type": "proj",
-            "allow": [
-                "createProject",
-                "updateTags"
-            ],
-            "deny": [
-                "deleteProject"
-            ]
-        },
-        "proj/demo;tag1": {
-            "resourceString": "proj/demo;tag1",
-            "type": "proj",
-            "allow": [
-                "updateProjectName",
-                "createProject",
-                "updateTags"
-            ],
-            "deny": [
-                "deleteProject"
-            ]
-        },
-        "proj/*": {
-            "resourceString": "proj/*",
-            "type": "proj",
-            "allow": [
-                "updateTags"
-            ],
-            "deny": [
-               "deleteProject"
-            ]
-        }
-    }
-```
+* [Using Actions](https://docs.launchdarkly.com/home/members/role-actions)

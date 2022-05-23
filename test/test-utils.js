@@ -21,10 +21,6 @@ describe('Test utils', function() {
     assert.hasAnyKeys(utils.getResourceActions('proj').actions, ['createProject', 'viewProject']);
     assert.hasAnyKeys(utils.getResourceActions('acct').actions, ['createSamlConfig', 'createScimConfig']);
 
-    done();
-  });
-
-  it('Must return resource actions for resource string', function (done) {
     assert.hasAnyKeys(utils.getResourceActions('proj/*').actions, ['createProject', 'viewProject']);
     assert.equal(utils.getResourceActions('proj/*').resourceName,'proj');
     assert.hasAnyKeys(utils.getResourceActions('acct/*').actions, ['createSamlConfig', 'createScimConfig']);
@@ -65,7 +61,17 @@ describe('Test utils', function() {
         'proj/*:env/*;tag1,tag2:flag/*', 
         'proj/demo;tag2:env/production;tag1'
       ];
+  it('Must create regex', function (done) {
 
+    
+    assert.equal( utils.createRegex('proj/demo'), 'proj\\/demo');
+    assert.equal( utils.createRegex('!proj/demo'), 'proj\\/demo');
+
+    assert.equal( utils.createRegex('proj/demo:env/*'), 'proj\\/demo:env\\/(?!.*:).*');
+    assert.equal( utils.createRegex('!proj/demo:env/*'), 'proj\\/demo:env\\/(?!.*:).*');
+
+    done();
+  });
   it('Must match Regex for proj/* resource string', function (done) {
 
     let matchMembers = [
