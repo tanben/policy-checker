@@ -64,8 +64,8 @@ describe('Test utils', function() {
   it('Must create regex', function (done) {
 
     
-    assert.equal( utils.createRegex('proj/demo'), 'proj\\/demo');
-    assert.equal( utils.createRegex('!proj/demo'), 'proj\\/demo');
+    assert.equal(utils.createRegex('proj/demo'), 'proj\\/demo(?!.*:).*');
+    assert.equal(utils.createRegex('!proj/demo'), 'proj\\/demo(?!.*:).*');
 
     assert.equal( utils.createRegex('proj/demo:env/*'), 'proj\\/demo:env\\/(?!.*:).*');
     assert.equal( utils.createRegex('!proj/demo:env/*'), 'proj\\/demo:env\\/(?!.*:).*');
@@ -100,6 +100,23 @@ describe('Test utils', function() {
 
     done();
   });
+  
+  it('Must match Regex for proj/* resource string', function (done) {
+
+    let resources = [
+      'proj/sandbox-a'
+      ,'proj/sandbox-b'
+      , 'proj/sandbox-c'
+      ,'acct/testaccount'
+    ];
+
+    let regexStr = utils.createRegex('proj/*-*');
+    let regex = new RegExp(regexStr);
+    let match = resources.filter(resourceUrl => resourceUrl.trim().match(regex));
+    assert.includeMembers(match, ['proj/sandbox-a', 'proj/sandbox-b','proj/sandbox-c'])
+    done();
+  });
+  
   it('Must match Regex for proj/*:env/* resource string', function (done) {
 
      let matchMembers = [
@@ -182,8 +199,8 @@ describe('Test utils', function() {
         };
       let htmlStr = utils.convJson2Html(rawData);
       // console.log(htmlStr);
-      assert.isTrue(htmlStr.includes('<td>createProject</td>'));
-      assert.isTrue(htmlStr.includes('<td>updateTags</td>'));
+      assert.isTrue(htmlStr.includes('createProject'));
+      assert.isTrue(htmlStr.includes('updateTags'));
       done();
    });
     it('Must generate HTML Report from JSON data', function (done) {
@@ -204,8 +221,8 @@ describe('Test utils', function() {
       };
       let htmlReport = utils.convHTMLReport(rawData);
       // console.log(htmlReport);
-      assert.isTrue(htmlReport.includes('<td>createProject</td>'));
-      assert.isTrue(htmlReport.includes('<td>updateTags</td>'));
+      assert.isTrue(htmlReport.includes('createProject'));
+      assert.isTrue(htmlReport.includes('updateTags'));
       assert.isTrue(htmlReport.includes('<html>'));
       assert.isTrue(htmlReport.includes('<body>'));
       

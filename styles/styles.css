@@ -22,3 +22,9 @@ table td:nth-child(2){
 div.graph_container {
   width:55%
 }
+tr.deny{
+  color: #ae2c2ced;
+}
+tr.allow{
+  color: #087f5b;
+}

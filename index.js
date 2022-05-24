@@ -29,7 +29,7 @@ function main() {
     utils.writeToFile(JSON.stringify(policyJSON,null,2), 'data.json');
     utils.writeToFile(JSON.stringify(graph, null, 2), 'graph.json');
     utils.writeToFile(JSON.stringify(resourceActions, null, 2), 'resourceActions.json');
-    utils.generateHTMLReport(resourceActions, graph,  'report.html');
+    utils.generateHTMLReport(resourceActions, graph, 'report.html', policyFile);
     
 
 }
