@@ -1,13 +1,13 @@
 # Policy Checker
 
-Policy checker is a CLI for evaluating and detecting overlaps in your LaunchDarkly custom role policy. 
+Policy checker is a CLI for evaluating permissions and detecting overlaps in your LaunchDarkly custom role policy. 
 
 
 ![](./img/overview.jpg)
 
 The report contains two sections
 - Resource Graph. Displays the resources that have overlapping permissions.
-- Permissions Table. The Table contains extrapolated **Allowed** permissions for all resources.
+- Permissions Table. Lists the defined and inherited permissions for each policy statement.
 
 ### Resource Graph
 The resource graph shows overlapping statements in your policy. 
@@ -18,29 +18,30 @@ Using this sample Policy JSON:
 ```json
 [
   {
-    "effect": "allow",
-    "actions": [
-      "createProject",
-      "deleteProject"
-    ],
     "resources": [
-      "proj/*"
-    ]
+      "proj/sandbox-project"
+    ],
+    "actions": [
+      "updateProjectName",
+      "updateTags"
+    ],
+    "effect": "allow"
   },
   {
-    "effect": "allow",
+    "resources": [
+      "proj/*"
+    ],
     "actions": [
       "updateTags"
     ],
-    "resources": [
-      "proj/demo"
-    ]
+    "effect": "deny"
   }
 ]
 ```
 >  See  [Understanding  policies](https://docs.launchdarkly.com/home/members/role-policies#understanding-policies) for details on Policy attributes.
 
-The above Policy would produce a graph showing resource expression  `proj/*` matching `proj/demo` with the permissions table showing **Allowed** actions explicitly defined for `proj/demo` and extrapolated from `proj/*`.
+The above sample policy would produce a graph showing resources with overlapping permissions in a graph and a table of the defined and inherited permissions.
+ 
 
 *file: report.html*
 
@@ -48,31 +49,30 @@ The above Policy would produce a graph showing resource expression  `proj/*` mat
 
 
 ### Permissions Table
-The permissions table shows **ALLOWED** actions listed in the **resourceActions.json**. 
-> Deny action sets are not displayed.
+> Allowed actions are in GREEN and Denied actions are in RED
 
+The permissions table shows actions listed in the **resourceActions.json**. 
 
 *file: resourceActions.json*
 ```json
 {
+  "proj/sandbox-project": {
+    "resourceString": "proj/sandbox-project",
+    "type": "proj",
+    "allow": [
+      "updateProjectName"
+    ],
+    "deny": [
+      "updateTags"
+    ]
+  },
   "proj/*": {
     "resourceString": "proj/*",
     "type": "proj",
-    "allow": [
-      "createProject",
-      "deleteProject"
-    ],
-    "deny": []
-  },
-  "proj/demo": {
-    "resourceString": "proj/demo",
-    "type": "proj",
-    "allow": [
-      "updateTags",
-      "createProject",
-      "deleteProject"
-    ],
-    "deny": []
+    "allow": [],
+    "deny": [
+      "updateTags"
+    ]
   }
 }
 ```
@@ -80,6 +80,7 @@ The permissions table shows **ALLOWED** actions listed in the **resourceActions.
 ## Features
 - Evaluate resource permissions
 - Display resources with overlapping permissions
+
 see [CHANGELOG.md](CHANGELOG.md) for details.
 
 
@@ -137,11 +138,11 @@ npm run dev
 
 ## Output 
 The following reports are generated in the `./output` directory
-* data.json  - LaunchDarkly policy JSON file
+* data.json  - Your policy. Use the Advanced Editor in LaunchDarkly or API to copy your custom role policy
 
-* graph.json - contains resources and list of resources overlapps
+* graph.json - contains resources that have overlapping permissions, used in generating the chart.
 
-* resourceActions.json - contains the resource and extrapolated permissions which are rendered on the HTML table
+* resourceActions.json - contains the resource permissions, used in generating the table.
 
 * report.html -  HTML report
 
