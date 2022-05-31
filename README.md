@@ -1,6 +1,6 @@
 # Policy Checker
 
-Policy checker is a CLI for evaluating permissions and detecting overlaps in your LaunchDarkly custom role policy. 
+Policy checker is a CLI for evaluating permissions and detecting overlaps in your LaunchDarkly permission policy. 
 
 
 ![](./img/overview.jpg)
@@ -50,6 +50,13 @@ The above sample policy would produce a graph showing resources with overlapping
 
 ### Permissions Table
 > Allowed actions are in GREEN and Denied actions are in RED
+Table columns
+- Actions , first column shows the Allowed or Denied actions
+- Description, second column is a description of the action
+- Resource string, third column is the resource statement this action was inherited from
+
+![](./img/table.jpg)
+
 
 The permissions table shows actions listed in the **resourceActions.json**. 
 
@@ -62,17 +69,25 @@ The permissions table shows actions listed in the **resourceActions.json**.
     "allow": [
       "updateProjectName"
     ],
+    "allowDetails": {},
     "deny": [
       "updateTags"
-    ]
+    ],
+    "denyDetails": {
+      "updateTags": [
+        "proj/*"
+      ]
+    }
   },
   "proj/*": {
     "resourceString": "proj/*",
     "type": "proj",
     "allow": [],
+    "allowDetails": {},
     "deny": [
       "updateTags"
-    ]
+    ],
+    "denyDetails": {}
   }
 }
 ```

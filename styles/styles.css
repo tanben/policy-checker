@@ -2,16 +2,19 @@
 table {
   border-collapse: collapse; 
   font-family: helvetica;
-  width:800px;
 }
 td, th {border:  1px solid;
       padding: 10px;
-      min-width: 250px;
-      background: white;
       box-sizing: border-box;
       text-align: left;
+      min-width:300px;
+      width:400px;
 }
+tr:nth-child(even) {background: 	#F0F0F0}
+tr:nth-child(odd) {background: #FFF}
+
 thead th {
+  cursor: pointer;
   text-align: center;
   background-color:#a6cee3;
   
@@ -19,12 +22,30 @@ thead th {
 table td:nth-child(2){
   min-width:500px;
 }
-div.graph_container {
-  width:55%
-}
+  
 tr.deny{
   color: #ae2c2ced;
 }
 tr.allow{
   color: #087f5b;
+}
+.chart {
+  width: 100%; 
+  min-height: 450px;
+}
+.graph_container{
+  margin:0 !important;
+  
+}
+
+.table_container{
+  height: 440px;
+  overflow: auto;
+  float: left;
+  position: relative;
+  margin-left: -5px;
+}
+
+.highlight{
+  color: red;
 }

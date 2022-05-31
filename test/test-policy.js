@@ -72,7 +72,7 @@ describe('Test policy', function() {
 
             
         let parsed = policy.createResourceActions(samplePolicy);
-        assert.hasAllKeys(parsed[resourceName], ['type', 'allow', 'deny', 'resourceString']);
+        assert.hasAllKeys(parsed[resourceName], ['type', 'allow', 'allowDetails', 'denyDetails', 'deny', 'resourceString']);
         assert.equal(parsed[resourceName].type, 'proj');
         assert.equal(parsed[resourceName].resourceString, resourceName);
         // console.log(parsed)
@@ -92,7 +92,7 @@ describe('Test policy', function() {
 
 
         let parsed = policy.createResourceActions(samplePolicy);
-        assert.hasAllKeys(parsed[resourceName], ['type', 'allow', 'deny', 'resourceString']);
+        assert.hasAllKeys(parsed[resourceName], ['type', 'allow', 'allowDetails', 'denyDetails', 'deny', 'resourceString']);
         assert.equal(parsed[resourceName].type, 'env');
         assert.includeMembers(parsed[resourceName].allow, ['createEnvironment', 'deleteEnvironment']);
 
@@ -110,7 +110,7 @@ describe('Test policy', function() {
 
 
         let parsed = policy.createResourceActions(samplePolicy);
-        assert.hasAllKeys(parsed[resourceName], ['type', 'allow', 'deny', 'resourceString']);
+        assert.hasAllKeys(parsed[resourceName], ['type', 'allow', 'allowDetails', 'denyDetails', 'deny', 'resourceString']);
         assert.equal(parsed[resourceName].type, 'flag');
         assert.includeMembers(parsed[resourceName].allow, ['applyApprovalRequest', 'copyFlagConfigFrom']);
 
@@ -140,7 +140,7 @@ describe('Test policy', function() {
 
         let parsed = policy.createResourceActions(samplePolicy);
         // console.log(parsed)
-        assert.hasAllKeys(parsed['proj/*'], ['type', 'allow', 'deny', 'resourceString']);
+        assert.hasAllKeys(parsed['proj/*'], ['type', 'allow',  'allowDetails', 'denyDetails', 'deny', 'resourceString']);
         assert.equal(parsed['proj/*'].type, 'proj');
         assert.equal(parsed['proj/*:env/*'].type, 'env');
         
@@ -275,11 +275,69 @@ describe('Test policy', function() {
         ];
         let procActions = policy.createResourceActions(samplePolicy);
         let {graph, resourceActions} = policy.applyResourceActions(procActions);
-        // console.log(JSON.stringify(modResourceActions,null,2));
+        
         assert.includeMembers(graph['proj/*'], ['proj/demo', 'proj/demo;tag1,tag2']);
         assert.includeMembers(graph['proj/demo'], ['proj/demo;tag1,tag2']);
         assert.equal(graph['proj/demo;tag1,tag2'].length, 0);
         assert.includeMembers(resourceActions['proj/demo'].allow, ['updateProjectName', 'viewProject']);
+        done();
+    });
+    it('Must include allowDetaila', function (done) {
+
+        const samplePolicy = [
+            {
+                actions: ["viewProject"],
+                effect: "allow",
+                resources: ['proj/*']
+            },{
+                actions: ["updateTags"],
+                effect: "allow",
+                resources: ['proj/de*']
+            }, {
+                actions: ["updateProjectName"],
+                effect: "allow",
+                resources: ['proj/demo']
+            }
+        ];
+        let procActions = policy.createResourceActions(samplePolicy);
+        let {graph, resourceActions} = policy.applyResourceActions(procActions);
+        
+        assert.includeMembers(resourceActions['proj/demo'].allow, ['updateProjectName', 'viewProject', 'updateTags']);
+        assert.hasAllKeys(resourceActions['proj/demo'].allowDetails, ['viewProject', 'updateTags']);
+        // console.log(resourceActions['proj/demo'].allowDetails)
+        // { viewProject: [ 'proj/*', 'proj/de*' ], updateTags: [ 'proj/de*' ] }
+        assert.includeMembers(resourceActions['proj/demo'].allowDetails['viewProject'], ['proj/*', 'proj/de*']);
+        assert.includeMembers(resourceActions['proj/demo'].allowDetails['updateTags'], [ 'proj/de*']);
+
+        done();
+    });
+    it('Must include denyDetaila', function (done) {
+
+        const samplePolicy = [
+            {
+                actions: ["viewProject"],
+                effect: "deny",
+                resources: ['proj/*']
+            },{
+                actions: ["updateTags"],
+                effect: "deny",
+                resources: ['proj/de*']
+            }, {
+                actions: ["updateProjectName"],
+                effect: "deny",
+                resources: ['proj/demo']
+            }
+        ];
+        let procActions = policy.createResourceActions(samplePolicy);
+        let {graph, resourceActions} = policy.applyResourceActions(procActions);
+        // console.log(resourceActions['proj/demo'].denyDetails)
+        
+        assert.includeMembers(resourceActions['proj/demo'].deny, ['updateProjectName', 'viewProject', 'updateTags']);
+        assert.hasAllKeys(resourceActions['proj/demo'].denyDetails, ['viewProject', 'updateTags']);
+        // { viewProject: [ 'proj/*', 'proj/de*' ], updateTags: [ 'proj/de*' ] }
+        assert.includeMembers(resourceActions['proj/demo'].denyDetails['viewProject'], ['proj/*', 'proj/de*']);
+        assert.includeMembers(resourceActions['proj/demo'].denyDetails['updateTags'], [ 'proj/de*']);
+
         done();
     });
     it('Must not include in graph  proj/* for notResources', function (done) {
@@ -299,7 +357,7 @@ describe('Test policy', function() {
         let {graph, resourceActions} = policy.applyResourceActions(procActions);
         assert.includeMembers(graph['!proj/sandbox-block'], ["proj/sandbox-a", "proj/sandbox-b"]);
         assert.notIncludeMembers(graph['proj/*'],  ["!proj/sandbox-a"]);
-        assert.notIncludeMembers(graph['!proj/sandbox-block'],  ["proj/*"]);
+        // assert.notIncludeMembers(graph['!proj/sandbox-block'],  ["proj/*"]);
         done();
     });
      it('Must Apply DENY resource actions for matching regex proj/*', function (done) {

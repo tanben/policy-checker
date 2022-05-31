@@ -187,45 +187,111 @@ describe('Test utils', function() {
             "resourceString": "proj/sample",
             "type": "proj",
             "allow": [ "createProject",    "updateTags"   ],
-            "deny": [   "deleteProject"]
+            "allowDetails":{"updateTags":['proj/*']},
+            "deny": [   "deleteProject"],
+            "denyDetails":{'deleteProject':['proj/*']}
           },
 
           "proj/*": {
             "resourceString": "proj/*",
             "type": "proj",
             "allow": [ "updateTags"  ],
-            "deny": [  "deleteProject" ]
+            "allowDetails":{},
+            "deny": [  "deleteProject" ],
+            "denyDetails":{}
           },
         };
       let htmlStr = utils.convJson2Html(rawData);
-      // console.log(htmlStr);
       assert.isTrue(htmlStr.includes('createProject'));
       assert.isTrue(htmlStr.includes('updateTags'));
       done();
    });
-    it('Must generate HTML Report from JSON data', function (done) {
-      let rawData = {
-        "proj/sample": {
-          "resourceString": "proj/sample",
-          "type": "proj",
-          "allow": ["createProject", "updateTags"],
-          "deny": ["deleteProject"]
-        },
+  it('Must generate HTML Report from JSON data', function (done) {
+    let rawData = {
+      "proj/sample": {
+        "resourceString": "proj/sample",
+        "type": "proj",
+        "allow": ["createProject", "updateTags"],
+        "deny": ["deleteProject"],
+        "allowDetails":{"updateTags":['proj/*']},
+        "denyDetails":{"deleteProject":['proj/*']}
 
-        "proj/*": {
-          "resourceString": "proj/*",
-          "type": "proj",
-          "allow": ["updateTags"],
-          "deny": ["deleteProject"]
-        },
-      };
-      let htmlReport = utils.convHTMLReport(rawData);
-      // console.log(htmlReport);
-      assert.isTrue(htmlReport.includes('createProject'));
-      assert.isTrue(htmlReport.includes('updateTags'));
-      assert.isTrue(htmlReport.includes('<html>'));
-      assert.isTrue(htmlReport.includes('<body>'));
-      
-      done();
-    });
+      },
+
+      "proj/*": {
+        "resourceString": "proj/*",
+        "type": "proj",
+        "allow": ["updateTags"],
+        "deny": ["deleteProject"],
+        "allowDetails":{},
+        "denyDetails":{}
+
+      },
+    };
+    let htmlReport = utils.convHTMLReport(rawData);
+    assert.isTrue(htmlReport.includes('createProject'));
+    assert.isTrue(htmlReport.includes('updateTags'));
+    assert.isTrue(htmlReport.includes('<html>'));
+    assert.isTrue(htmlReport.includes('<body>'));
+    
+    done();
+  });
+
+  it('Must merge allow & deny Details objects', function (done) {
+    let rs1={
+      "proj/demo": {
+        "resourceString": "proj/demo",
+        "type": "proj",
+        "allowDetails": { "viewProject": ["proj/*" ]  },
+        "denyDetails": { "viewProject": ["proj/*" ]  }
+      }
+    };
+    let rs2={
+      "proj/demo": {
+        "resourceString": "proj/demo",
+        "type": "proj",
+        "allowDetails": { "updateTags": [ "proj/*" ] },
+        "denyDetails": {}
+      }
+    };
+    
+    
+    let output = utils.mergeAllowDenyDetails(rs1['proj/demo'].allowDetails, rs2['proj/demo'].allowDetails);
+    // console.log(output)
+    assert.hasAllKeys(output, ['viewProject', 'updateTags']);
+    
+    output = utils.mergeAllowDenyDetails(rs1['proj/demo'].denyDetails, rs2['proj/demo'].denyDetails);
+    assert.hasAllKeys(output, ['viewProject']);
+    done();
+  });
+
+  it('Must merge allow & deny actions objects', function (done) {
+    let rs1={
+      "proj/demo": {
+        "resourceString": "proj/demo",
+        "type": "proj",
+        "allow":['viewProject'],
+        "deny":[]
+      }
+    };
+    let rs2={
+      "proj/demo": {
+        "resourceString": "proj/demo",
+        "type": "proj",
+        "allow":['updateTags'],
+        "deny":['viewProject']
+      }
+    };
+    
+    
+    let output = utils.mergeAllowDenyActions(rs1['proj/demo'].allow, rs2['proj/demo'].allow);
+    // console.log(output)
+    assert.includeMembers(output, ['viewProject', 'updateTags']);
+    
+    output = utils.mergeAllowDenyActions(rs1['proj/demo'].deny, rs2['proj/demo'].deny);
+    assert.includeMembers(output, ['viewProject']);
+    
+    done();
+  });
+
 });
