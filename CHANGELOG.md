@@ -1,3 +1,6 @@
+- 2022-06-06 -- @v1.2.1
+    - Fix notResource handling
+
 - 2022-05-31 -- @v1.2.0
     - Clickable resource string (table header)
     - Update graph on selected resource string
