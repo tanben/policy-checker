@@ -1,7 +1,10 @@
 - 2022-06-27 -- @v1.3.0
     - Implement flag validator
       - check if all environment are allowed for environment wide flag action
+    - Implement load multiple policies
+    - Implement load policies from directory
     - Fix chart UI
+
   
 - 2022-06-06 -- @v1.2.1
     - Fix notResource handling

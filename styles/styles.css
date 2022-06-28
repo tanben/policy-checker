@@ -2,7 +2,15 @@
 body{
   margin-left: 40px;
 }
-
+.files_container{
+    font-style: normal;
+    font-size: 18px;
+    font-weight: normal;
+    width: 550px;
+    overflow: scroll;
+    height: 100px;
+    border: solid 2px;
+}
 table {
   border-collapse: collapse; 
   font-family: helvetica;

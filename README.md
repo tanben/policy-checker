@@ -5,96 +5,12 @@ Policy checker is a CLI for evaluating permissions and detecting overlaps in you
 
 ![](./img/overview.jpg)
 
-The report contains two sections
-- Resource Graph. Displays the resources that have overlapping permissions.
-- Permissions Table. Lists the defined and inherited permissions for each policy statement.
 
-### Resource Graph
-The resource graph shows overlapping statements in your policy. 
-
-Using this sample Policy JSON:
-
-*file: policy.json*
-```json
-[
-  {
-    "resources": [
-      "proj/sandbox-project"
-    ],
-    "actions": [
-      "updateProjectName",
-      "updateTags"
-    ],
-    "effect": "allow"
-  },
-  {
-    "resources": [
-      "proj/*"
-    ],
-    "actions": [
-      "updateTags"
-    ],
-    "effect": "deny"
-  }
-]
-```
->  See  [Understanding  policies](https://docs.launchdarkly.com/home/members/role-policies#understanding-policies) for details on Policy attributes.
-
-The above sample policy would produce a graph showing resources with overlapping permissions in a graph and a table of the defined and inherited permissions.
- 
-
-*file: report.html*
-
-![](./img/sample.jpg)
-
-
-### Permissions Table
-> Allowed actions are in GREEN and Denied actions are in RED
-Table columns
-- Actions , first column shows the Allowed or Denied actions
-- Description, second column is a description of the action
-- Resource string, third column is the resource statement this action was inherited from
-
-![](./img/table.jpg)
-
-
-The permissions table shows actions listed in the **resourceActions.json**. 
-
-*file: resourceActions.json*
-```json
-{
-  "proj/sandbox-project": {
-    "resourceString": "proj/sandbox-project",
-    "type": "proj",
-    "allow": [
-      "updateProjectName"
-    ],
-    "allowDetails": {},
-    "deny": [
-      "updateTags"
-    ],
-    "denyDetails": {
-      "updateTags": [
-        "proj/*"
-      ]
-    }
-  },
-  "proj/*": {
-    "resourceString": "proj/*",
-    "type": "proj",
-    "allow": [],
-    "allowDetails": {},
-    "deny": [
-      "updateTags"
-    ],
-    "denyDetails": {}
-  }
-}
-```
 
 ## Features
 - Evaluate resource permissions
 - Display resources with overlapping permissions
+- Valdiate Flag actions
 
 see [CHANGELOG.md](CHANGELOG.md) for details.
 
@@ -122,11 +38,12 @@ To run using sample policy
 ```
 npm run sample 
 ```
-To parse a policy file
+To parse single or multiple policy JSON file
 ``` 
-node index.js -f <Policy file JSON>
+node index.js -f <Policy>
+node index.js -f <Policy>  -f <Policy>
 ```
-To parse policy files in a directory
+To parse multiple policy JSON files in a directory
 ```
 node index.js -d <Policy directory>
 ```
@@ -169,9 +86,7 @@ The following reports are generated in the `./output` directory
 * report.html -  HTML report
 
 
-# Documentation
-
+# Resources
 ### LaunchDarkly
 * [Role Policies](https://docs.launchdarkly.com/home/members/role-policies)
-
 * [Using Actions](https://docs.launchdarkly.com/home/members/role-actions)

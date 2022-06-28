@@ -3,7 +3,8 @@ const policy = require('./lib/policy');
 const utils = require('./lib/utils');
 const fs = require('fs');
 const argv = require('minimist')(process.argv.slice(2));
-
+const _=require('lodash');
+const path = require('path');
 
 main();
 
@@ -16,82 +17,97 @@ function usage() {
 
 
 function main() {
-    let policyFile = argv.f;
+    let inputFiles = argv.f;
     let inputDir = argv.d;
-
-    if (!policyFile && !inputDir) {
+    
+    if (!inputFiles && !inputDir) {
         usage();
         return;
     }
+    let policies= inputFiles;
 
     let result={hasError:false};
-    if (policyFile){
-        result = processPolicy(policyFile);
+    if (inputFiles && !_.isArray(inputFiles)){
+        result = processPolicyFile(inputFiles);
     }else{
-        result = processPolicies(inputDir);
-    }
-
-    if (result.hasError) {
-        return -1;
+        if (_.isEmpty(inputFiles) && inputDir){
+            policies = listFiles(inputDir);
+            if (_.isEmpty(policies)) {
+                console.log(`No Policy *.JSON file found in Path [${inputDir}]`);
+                // exit abrupt
+                process.exit(1);
+            }
+        }
+        result = processPolicies(policies);
     }
     generateReport({
         ...result,
-        policyFile
+        policyFile:policies
     });
 }
 
-function processPolicies(inputDir){
-
-    let skipApplyAction= true;
-    let allProcActions={};
-    let allPolicyJSON=[];
-
-    let files = fs.readdirSync(inputDir).filter(file => {
+function listFiles(dir){
+    let files = fs.readdirSync(dir).filter(file => {
         return file.match(/\.json$/g)
-    })
-
+    }).map( file=>{ return path.join(dir, file)});
+    return files;
+}
+function processPolicies(files){
+    let allPolicyJSON=[];
+    let allResourceActions={};
+    
     for (let file of files){
          let {
-             policyJSON, 
+             policyJSON,
+             resourceActions,
              procActions,
              hasError,
              errorMessage
-         } = processPolicy(`${inputDir}/${file}`, skipApplyAction);
-         if (hasError){
-            continue;
-         }
-         allProcActions = Object.assign({}, allProcActions, procActions);
-         allPolicyJSON= allPolicyJSON.concat(policyJSON);
-    }
+         } = processPolicyFile(file);
 
+        allPolicyJSON = allPolicyJSON.concat(policyJSON);
+        _.mergeWith(allResourceActions, resourceActions, mergeArray);
+    }
     let {
         graph,
         resourceActions
-    } = policy.applyResourceActions(allProcActions);
+    } = policy.applyResourceActions(allResourceActions, {evaluateDenyActions:false});
 
-    return({policyJSON: allPolicyJSON, graph, resourceActions, hasError:false});
+
+    return ({
+        policyJSON: allPolicyJSON,
+        graph,
+        resourceActions,
+        hasError: false
+    });
 }
 
-function processPolicy(policyFile, skipApplyAction=false){
+function processPolicyFile(policyFile) {
     if (!fs.existsSync(policyFile)) {
         let msg= `\nError: Policy File [${policyFile}] not found!\n`;
-        console.log(msg);
         return {hasError:true, errorMessage:msg};
     }
     let data = fs.readFileSync(policyFile);
     let policyJSON = JSON.parse(data);
+    return processPolicy(policyJSON)
+}
+
+function processPolicy(policyJSON) {
     let procActions = policy.createResourceActions(policyJSON);
-    
-    if (skipApplyAction) {
-        return {policyJSON, procActions, hasError:false, errorMessage:undefined};
-    }
 
     let {
         graph,
         resourceActions
     } = policy.applyResourceActions(procActions);
 
-    return {data, policyJSON, graph, resourceActions,procActions, procActions, hasError:false, errorMessage:undefined};
+    return {
+        policyJSON,
+        graph,
+        resourceActions,
+        procActions,
+        hasError: false,
+        errorMessage: undefined
+    };
 }
 
 function generateReport(params){
@@ -106,6 +122,11 @@ function generateReport(params){
     utils.writeToFile(JSON.stringify(resourceActions, null, 2), 'resourceActions.json');
     utils.generateHTMLReport(resourceActions, graph, 'report.html', policyFile);
 }
+
+function mergeArray(a, b) {
+    return _.isArray(a) ? _.union(a, b) : undefined;
+}
+
 function mainLegacy() {
     let { argv } = process;
     let [cmd, mainFile, policyFile] = argv;
