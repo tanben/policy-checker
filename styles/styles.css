@@ -1,4 +1,8 @@
 
+body{
+  margin-left: 40px;
+}
+
 table {
   border-collapse: collapse; 
   font-family: helvetica;
@@ -20,7 +24,7 @@ thead th {
   
 }
 table td:nth-child(2){
-  min-width:500px;
+  min-width:550px;
 }
   
 tr.deny{
@@ -35,11 +39,12 @@ tr.allow{
 }
 .graph_container{
   margin:0 !important;
-  
+  width: 1170px;
+  padding-left:80px;
 }
 
 .table_container{
-  height: 440px;
+  height: 550px;
   overflow: auto;
   float: left;
   position: relative;
@@ -48,4 +53,42 @@ tr.allow{
 
 .highlight{
   color: red;
+}
+.action_content{
+  float: left;
+  padding-top: 16px;
+  padding-left: 14px;
+}
+
+.warning{
+  float: left;  
+}
+
+.footer_container{
+  clear:both;
+  padding-top:20px;
+  overflow: hidden;
+  position: relative;
+
+}
+
+.notice_container{
+  position: absolute;
+  bottom: -2000px;
+}
+
+
+.warning_container:hover .tooltip {
+  display: block;
+}
+
+.tooltip {
+    margin-left: 50px;
+    padding: 10px;
+    width: 200px;
+
+    color: white;
+    display: none;
+    background: #e19831;
+    position: absolute;
 }

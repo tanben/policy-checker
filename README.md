@@ -106,6 +106,7 @@ see [CHANGELOG.md](CHANGELOG.md) for details.
 ## Built With
 * [JSON2HTML](https://json2html.com/)
 * [Google Chart](https://developers.google.com/chart)
+* [Icon8](https://icons8.com)
 
 
 ## Installation
@@ -121,9 +122,15 @@ To run using sample policy
 ```
 npm run sample 
 ```
+To parse a policy file
 ``` 
-node index.js <Policy file JSON>
+node index.js -f <Policy file JSON>
 ```
+To parse policy files in a directory
+```
+node index.js -d <Policy directory>
+```
+
 
 > Note: Use the LaunchDarkly advanced editor to copy and save your policy, see doc [here](https://docs.launchdarkly.com/home/members/role-policies#writing-policies-in-the-advanced-editor)
 
