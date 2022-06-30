@@ -52,10 +52,30 @@ function listFiles(dir){
     }).map( file=>{ return path.join(dir, file)});
     return files;
 }
+function updateMergedFilesDetails(mergedFilesDetails, allResourceActions, resourceActions, file) {
+    for (let key of Object.keys(resourceActions)) {
+        resourceActions[key].deny.forEach( action=>{
+            if (!mergedFilesDetails[key]){
+                mergedFilesDetails[key]={
+                    deny:{}
+                }
+            }
+
+            if (!mergedFilesDetails[key].deny[action]){
+                mergedFilesDetails[key].deny[action] = [];
+            }
+            if (!mergedFilesDetails[key].deny[action].includes(file)) {
+                mergedFilesDetails[key].deny[action].push(file)
+            }
+        })
+    }
+
+}
 function processPolicies(files){
     let allPolicyJSON=[];
     let allResourceActions={};
-    
+    let mergedFilesDetails={};
+
     for (let file of files){
          let {
              policyJSON,
@@ -65,8 +85,9 @@ function processPolicies(files){
              errorMessage
          } = processPolicyFile(file);
 
-        allPolicyJSON = allPolicyJSON.concat(policyJSON);
+         allPolicyJSON = allPolicyJSON.concat(policyJSON);
         _.mergeWith(allResourceActions, resourceActions, mergeArray);
+        updateMergedFilesDetails(mergedFilesDetails, allResourceActions, resourceActions, file);
     }
     let {
         graph,
@@ -78,6 +99,7 @@ function processPolicies(files){
         policyJSON: allPolicyJSON,
         graph,
         resourceActions,
+        mergedFilesDetails,
         hasError: false
     });
 }
@@ -115,12 +137,13 @@ function generateReport(params){
         policyJSON,
         graph,
         resourceActions,
-        policyFile
+        policyFile,
+        mergedFilesDetails
     } = params;
     utils.writeToFile(JSON.stringify(policyJSON, null, 2), 'data.json');
     utils.writeToFile(JSON.stringify(graph, null, 2), 'graph.json');
     utils.writeToFile(JSON.stringify(resourceActions, null, 2), 'resourceActions.json');
-    utils.generateHTMLReport(resourceActions, graph, 'report.html', policyFile);
+    utils.generateHTMLReport(resourceActions, graph, 'report.html', policyFile, mergedFilesDetails);
 }
 
 function mergeArray(a, b) {

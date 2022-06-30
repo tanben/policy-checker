@@ -19,8 +19,9 @@ td, th {border:  1px solid;
       padding: 10px;
       box-sizing: border-box;
       text-align: left;
-      min-width:300px;
-      width:400px;
+      min-width:400px;
+      max-width:400px;
+      overflow: auto;
 }
 tr:nth-child(even) {background: 	#F0F0F0}
 tr:nth-child(odd) {background: #FFF}
@@ -47,8 +48,8 @@ tr.allow{
 }
 .graph_container{
   margin:0 !important;
-  width: 1170px;
-  padding-left:80px;
+  width: 1350px;
+  
 }
 
 .table_container{
@@ -68,8 +69,22 @@ tr.allow{
   padding-left: 14px;
 }
 
-.warning{
+.info_icon {
+  float: left;
+  background-image: url('../img/icons8-info-40.png');
+  background-repeat: no-repeat;
+  width: 45px;
+  height: 45px;
+}
+.clear_both{
+  clear:both;
+}
+.warning_icon{
   float: left;  
+  background-image: url('../img/icons8-warning-48.png');
+  background-repeat: no-repeat;
+  width: 45px;
+  height: 45px;
 }
 
 .footer_container{
@@ -81,8 +96,9 @@ tr.allow{
 }
 
 .notice_container{
-  position: absolute;
-  bottom: -2000px;
+  /* position: absolute; */
+  /* bottom: -2000px; */
+  display: none;
 }
 
 
@@ -100,3 +116,16 @@ tr.allow{
     background: #e19831;
     position: absolute;
 }
+.warning_additive{
+  padding-top: 16px;
+ 
+}
+
+.warning_additive:hover .tooltip{
+  display: block;
+}
+
+.warning_additive.action_content{
+  text-decoration:line-through;
+}
+  
