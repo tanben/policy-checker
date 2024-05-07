@@ -1,7 +1,6 @@
-# Policy Checker
+# LaunchDarkly Policy Checker
 
-Policy checker is a CLI for evaluating permissions and detecting overlaps in your LaunchDarkly permission policy. 
-
+Policy Checker is a command-line interface (CLI) tool for evaluating permissions and detecting overlaps in your LaunchDarkly permission policy. It generates insightful reports to help you understand and manage your policy effectively.
 
 ![](./img/overview.jpg)
 
@@ -11,30 +10,38 @@ Policy checker is a CLI for evaluating permissions and detecting overlaps in you
 - Evaluate resource permissions
 - Display resources with overlapping permissions
 - Valdiate Flag actions
+- Generate comprehensive HTML report
 
-see [CHANGELOG.md](CHANGELOG.md) for details.
+
+see [CHANGELOG.md](CHANGELOG.md) for more details on the latest changes and improvements.
 
 
-# Getting Started
+
 ## Requirements
 * Node.JS >= 16.14.0
 
-## Built With
-* [JSON2HTML](https://json2html.com/)
-* [Google Chart](https://developers.google.com/chart)
-* [Icon8](https://icons8.com)
-
 
 ## Installation
-1. Install NodeJS packages.
+1. Clone the repository:
 ```
-$> npm install
+git clone https://github.com/your-username/policy-checker.git
 ```
 
+2. Navigate to the project directory:
+```
 
-# Usage 
-Run the policy checker using this sample command, this will generate the reports in `./output` directory.
-To run using sample policy
+cd policy-checker
+```
+
+3. Install the required dependencies:
+```
+npm install
+```
+
+## Usage 
+To run the Policy Checker, use one of the following commands:
+
+To run using a sample policy:
 ```
 npm run sample 
 ```
@@ -48,11 +55,13 @@ To parse multiple policy JSON files in a directory
 node index.js -d <Policy directory>
 ```
 
+The generated reports will be saved in the ./output directory.
 
-> Note: Use the LaunchDarkly advanced editor to copy and save your policy, see doc [here](https://docs.launchdarkly.com/home/members/role-policies#writing-policies-in-the-advanced-editor)
+**`Note`**: Use the LaunchDarkly advanced editor to copy and save your policy, see documentation for more information [here.](https://docs.launchdarkly.com/home/members/role-policies#writing-policies-in-the-advanced-editor)
 
 
-### Run tests   
+## Running tests   
+To run the test suite, use the following command:
 ```
 npm test
 ```
@@ -63,6 +72,7 @@ To run with Mocha -watch option during development
 npm run dev
 ```
 
+Example test output:
 ```
   Test policy
     ✔ Must return the actions for proj/*
@@ -75,7 +85,7 @@ npm run dev
 
 ```
 
-## Output 
+### Output 
 The following reports are generated in the `./output` directory
 * data.json  - Your policy. Use the Advanced Editor in LaunchDarkly or API to copy your custom role policy
 
@@ -86,7 +96,12 @@ The following reports are generated in the `./output` directory
 * report.html -  HTML report
 
 
-# Resources
-### LaunchDarkly
-* [Role Policies](https://docs.launchdarkly.com/home/members/role-policies)
-* [Using Actions](https://docs.launchdarkly.com/home/members/role-actions)
+
+### Built With
+* [JSON2HTML](https://json2html.com/)
+* [Google Chart](https://developers.google.com/chart)
+* [Icon8](https://icons8.com)
+  
+### Additional Resources
+* [LaunchDarkly: Custom Roles](https://docs.launchdarkly.com/home/members/role-policies)
+* [LaunchDarkly: Using Actions](https://docs.launchdarkly.com/home/members/role-actions)
