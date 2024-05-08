@@ -1,224 +1,227 @@
 {
-    "acct":{
-        "createSamlConfig": "Create a new SAML configuration for the account."
-        ,"createScimConfig": "Create a new SCIM configuration for the account."  
-        ,"deleteAccount": "Delete the account."
-        ,"deleteAccountToken": "Delete account tokens"
-        ,"deleteSamlConfig": "Delete the SAML configuration for the account."
-        ,"deleteScimConfig": "Delete the SCIM configuration for the account."
-        ,"deleteSubscription": "Cancel the account plan."
-        ,"getPaymentCard": "Get the credit card for the account."
-        ,"revokeSessions": "Revoke sessions issued before a specified date."
-        ,"updateAccountToken":	"Reset account tokens (for the LaunchDarkly REST API)."
-        ,"updateBillingContact":	"Update the billing contact for the account."
-        ,"updateOrganization":	"Update the organization name."
-        ,"updatePaymentCard":	"Change the credit card for the account."
-        ,"updateRequireMfa":	"Change whether multi-factor authentication (MFA) is required for all members on the account."
-        ,"updateSamlEnabled":	"Enable or disable SAML SSO for the account."
-        ,"updateSamlRequireSso":	"Change whether SSO must be used for authentication."
-        ,"updateSamlSsoUrl":	"Update the SAML SSO URL for the account."
-        ,"updateSamlX509Certificate":	"Update the SAML X509 certificate for the account."
-        ,"updateSessionDuration":	"Change the duration of sessions."
-        ,"updateSessionRefresh":	"Change whether sessions are refreshed automatically."
-        ,"updateSubscription":	"Change the pricing plan for the account."
-        ,"updateAccountOwner": 	"Update the account owner."
-    }
-    ,"proj":{
-        "createProject":	"Create a new project."
-        ,"deleteProject":	"Delete a project."
-        ,"updateDefaultClientSideAvailability":	"Change whether new feature flags are made available to client-side SDKs."
-        ,"updateIncludeInSnippetByDefault":	"Make new flags available to the client-side (JavaScript) SDK by default."
-        ,"updateProjectName":	"Rename a project."
-        ,"updateTags":	"Update tags associated with a project."
-        ,"viewProject":	"View a project. All custom roles can take this action by default. If set to deny, anyone impacted by this policy can neither view nor modify a project."
-    }
-    ,"env":{
-        "createEnvironment":	"Create new environments."
-        ,"deleteEnvironment":	"Delete an existing environment."
-        ,"updateApiKey":	"Reset the API key for an environment."
-        ,"updateColor":	"Change the color swatch for an environment."
-        ,"updateConfirmChanges":	"Require environment confirmation for changes to flags and segments."
-        ,"updateDefaultTrackEvents":	"Turn on sending detailed information for new flags by default."
-        ,"updateMobileKey":	"Reset the mobile key for an environment."
-        ,"updateName":	"Change the name of an environment."
-        ,"updateRequireComments":	"Require comments for changes to flags and segments."
-        ,"updateSecureMode":	"Turn secure mode on or off for an environment."
-        ,"updateTags":	"Update tags associated with an environment."
-        ,"updateTtl":	"Change the TTL for an environment."
-    },
-    "flag":{
-        "applyApprovalRequest":	"Apply an approved approval request for a flag."
-        ,"copyFlagConfigFrom":	"Copy settings from a feature flag."
-        ,"copyFlagConfigTo":	"Copy settings to a feature flag."
-        ,"createApprovalRequest":	"Create an approval request for a flag."
-        ,"createTriggers":	"Create a new trigger."
-        ,"deleteApprovalRequest":	"Delete an approval request for a flag."
-        ,"deleteExperimentResults":	"Delete experiment results."
-        ,"deleteFlagAttachedGoalResults":	"Reset the experiment results for a flag in a given environment."
-        ,"deleteTriggers":	"Delete a trigger."
-        ,"reviewApprovalRequest":	"Review an approval request for a flag."
-        ,"updateApprovalRequest":	"Update an existing approval request for a flag."
-        ,"updateExperimentActive":	"Start or stop an experiment in an environment."
-        ,"updateExpiringRules":	"Change a flag's expiring custom targeting rules."
-        ,"updateExpiringTargets":	"Change a flag's expiring individual user targeting rules."
-        ,"updateFallthrough":	"Update the On default rule, also called the fallthrough rule."
-        ,"updateFeatureWorkflows":	"Change a flag's feature workflows."
-        ,"updateFlagFallthroughTrackEvents":	"Change whether to send detailed event information for a flag in a given environment when the SDK selects the On default rule, also called the fallthrough rule."
-        ,"updateFlagRuleDescription":	"Update the description for custom targeting rules."
-        ,"updateFlagSalt":	"Update a feature flag's salt."
-        ,"updateOffVariation":	"Update the variation returned when flag toggle is set to off."
-        ,"updateOn":	"Toggle a feature flag on or off."
-        ,"updatePrerequisites":	"Update flag prerequisites."
-        ,"updateRules":	"Update custom targeting rules."
-        ,"updateScheduledChanges":	"Change the scheduled updates on a feature flag."
-        ,"updateTargets":	"Update individual user targeting rules."
-        ,"updateTrackEvents":	"Change whether to send detailed event information for a flag in a given environment."
-        ,"updateTriggers":	"Update an existing trigger."
+  "acct": {
+    "createSamlConfig": "Create a new SAML configuration for the account.",
+    "createScimConfig": "Create a new SCIM configuration for the account.",
+    "deleteAccount": "Delete the account.",
+    "deleteAccountToken": "Delete account tokens (for the LaunchDarkly REST API). This is a legacy action and may have inconsistent performance.",
+    "deleteSamlConfig": "Delete the SAML configuration for the account.",
+    "deleteScimConfig": "Delete the SCIM configuration for the account.",
+    "deleteSubscription": "Cancel the account plan.",
+    "getPaymentCard": "Get the credit card for the account.",
+    "revokeSessions": "Revoke sessions issued before a specified date.",
+    "updateAccountToken": "Reset account tokens (for the LaunchDarkly REST API).",
+    "updateBillingContact": "Update the billing contact for the account.",
+    "updateOrganization": "Update the organization name.",
+    "updatePaymentCard": "Change the credit card for the account.",
+    "updateRequireMfa": "Change whether multi-factor authentication (MFA) is required for all members on the account.",
+    "updateSamlDecryptionEnabled": "Enable or disable decryption for incoming SAML assertions for the account.",
+    "updateSamlDefaultRole": "Update the default role given to members when SAML doesn't specify one.",
+    "updateSamlEnabled": "Enable or disable SAML SSO for the account.",
+    "updateSamlLogoutUrl": "Update the SAML logout URL for the account.",
+    "updateSamlRequireSso": "Change whether SSO must be used for authentication.",
+    "updateSamlSsoUrl": "Update the SAML SSO URL for the account.",
+    "updateSamlX509Certificate": "Update the SAML X509 certificate for the account.",
+    "updateSamlX509KeystoreId": "Update the SAML X509 identifier for the account.",
+    "updateSessionDuration": "Change the duration of sessions.",
+    "updateSessionRefresh": "Change whether sessions are refreshed automatically.",
+    "updateSubscription": "Change the pricing plan for the account."
+  },
 
+  "proj": {
+    "createProject": "Create a new project.",
+    "deleteProject": "Delete an existing project.",
+    "updateProjectName": "Rename a project.",
+    "updateTags": "Update the tags associated with a project.",
+    "updateDefaultClientSideAvailability": "Change whether new flags are made available to client-side SDKs.",
+    "updateIncludeInSnippetByDefault": "Change whether new flags are made available to the JavaScript SDK by default.",
+    "updateProjectFlagDefaults": "Update the default flag settings for a project."
+  },
+  "env": {
+    "createEnvironment": "Create new environments within a project.",
+    "deleteEnvironment": "Delete an existing environment from a project.",
+    "updateApiKey": "Reset the SDK key for an environment, which is used to initialize the LaunchDarkly SDK.",
+    "updateApprovalSettings": "Configure the approval settings for an environment to control how changes are promoted.",
+    "updateColor": "Change the color associated with an environment in the UI to aid in visual differentiation.",
+    "updateConfirmChanges": "Require confirmation for changes to flags and segments within the environment.",
+    "updateCritical": "Designate the environment as critical or not, affecting alerting and monitoring.",
+    "updateDefaultTrackEvents": "Turn on or off the default tracking of analytics events for new flags created within the environment.",
+    "updateMobileKey": "Reset the mobile key for an environment used by mobile SDKs.",
+    "updateName": "Change the name of an environment.",
+    "updateRequireComments": "Require comments for any changes made to flags and segments in the environment.",
+    "updateSecureMode": "Toggle secure mode on or off to enhance security by ensuring that feature flag settings are specific to individual users.",
+    "updateTags": "Update or modify tags associated with an environment for better organization and filtering.",
+    "updateTtl": "Adjust the Time To Live (TTL) for SDK clients connecting to LaunchDarkly, affecting how long clients cache flag settings.",
+    "viewSdkKey": "Allow viewing of the server-side SDK key used for server-side flag evaluations.",
+    "deleteContextInstance": "Permit deletion of context instances within the environment, which can include users or other identifiers.",
+    "importEventData": "Allow the importation of analytics event data using the LaunchDarkly bulk data tools.",
+    "updateSessionDuration": "Modify the duration of user sessions within the environment to control how long users remain logged in without activity."
+  },
 
-        ,"cloneFlag": "Project and Environment scope. Create a new flag with settings based on an existing flag. To clone a flag, members need to have the cloneFlag permission on the source flag, as well as the createFlag permission for the new flag. Impacts all environments in a project."
-        ,"createExperiment":"Project and Environment scope. Create an experiment. Impacts all environments in a project."
-        ,"createFlag":"Project and Environment scope. Create a feature flag. Impacts all environments in a project."
-        ,"createFlagLink":"Project and Environment scope. Create a flag link. Impacts all environments in a project."
-        ,"deleteExperiment":"Project and Environment scope. Delete an experiment. Impacts all environments in a project."
-        ,"deleteFlag":"Project and Environment scope. Delete a flag. Impacts all environments in a project."
-        ,"deleteFlagLink":"Project and Environment scope. Delete a flag link. Impacts all environments in a project."
-        ,"updateAttachedGoals":"Project and Environment scope. Start or stop an A/B testing experiment. Impacts all environments in a project."
-        ,"updateClientSideFlagAvailability":"Project and Environment scope. Change whether the feature flag is available to client-side SDKs. Impacts all environments in a project."
-        ,"updateDescription":"Project and Environment scope. Change the description of a feature flag. Impacts all environments in a project."
-        ,"updateExperimentBaseline":"Project and Environment scope. Change a flag's baseline variation for experiments. Impacts all environments in a project."
-        ,"updateFlagCustomProperties":	"Project and Environment scope. Update custom properties attached to a flag. Impacts all environments in a project."
-        ,"updateFlagDefaultVariations":	"Project and Environment scope. Change the default flag variations used by newly created environments for a feature flag. Impacts all environments in a project."
-        ,"updateFlagLink":	"Project and Environment scope. Update a flag link. Impacts all environments in a project."
-        ,"updateFlagVariations":	"Project and Environment scope. Change the flag's variations. Impacts all environments in a project."
-        ,"updateGlobalArchived":	"Project and Environment scope. Change whether a flag is archived. Impacts all environments in a project."
-        ,"updateIncludeInSnippet":	"Project and Environment scope. Change whether the feature flag is available to front-end code with the JavaScript SDK. Impacts all environments in a project."
-        ,"updateMaintainer":	"Project and Environment scope. Update the flag maintainer. Impacts all environments in a project."
-        ,"updateName":	"Project and Environment scope. Change the name of a feature flag. Impacts all environments in a project."
-        ,"updateTags":	"Project and Environment scope. Update tags associated with a flag. Impacts all environments in a project."
-        ,"updateTemporary":	"Project and Environment scope. Marks a flag temporary or permanent. Impacts all environments in a project."
-    }
-    ,"segment":{
-        "createSegment":	"Create new segments."
-        ,"deleteSegment":	"Delete segments."
-        ,"updateDescription":	"Update a segment's description."
-        ,"updateExcluded":  "Change a segment's excluded users."
-        ,"updateExpiringRules":	"Change a segment's expiring custom targeting rules."
-        ,"updateExpiringTargets":	"Change a segment's expiring individual user targeting rules."
-        ,"updateIncluded":	"Change a segment's included users."
-        ,"updateName":	"Change the name of a segment."
-        ,"updateRules":	"Change a segment's custom targeting rules."
-        ,"updateScheduledChanges":	"Change the scheduled updates on a segment."
-        ,"updateTags":	"Change the tags associated with a segment."
-    }
-    ,"user":{
-        "deleteUser":"Delete a user."
-    }
-    ,"member":{
-        "createMember":	"Add a new account member to an account."
-        ,"deleteMember":	"Remove an account member from an account."
-        ,"sendMfaRecoveryCode":	"Send an account member their MFA recovery code."
-        ,"sendMfaRequest":	"Send an account member a request to enable MFA."
-        ,"updateCustomRole":	"Update an account member's custom roles."
-        ,"updateRole":	"Update an account member's built-in role."
-    }
-    
-    ,"role":{
-        "createRole": "Create new custom roles."
-        ,"deleteRole": "Delete a custom role."
-        ,"updateDescription": "Update a custom role 's description."
-        ,"updateMembers": "Add or remove users from a custom role(equivalent to updateCustomRole on account members)."
-        ,"updateName": "Update a custom role 's name."
-        ,"updatePolicy": "Update a custom role 's policy."
-    }
+  "flag": {
+    "createFlag": "Create a new feature flag.",
+    "deleteFlag": "Delete a feature flag.",
+    "updateName": "Change the name of a feature flag.",
+    "updateDescription": "Modify the description of a feature flag.",
+    "updateTags": "Update the tags associated with a feature flag.",
+    "updateFlagVariations": "Change the variations for a feature flag.",
+    "updateIncludeInSnippet": "Toggle whether the flag is included in the client-side ID snippet.",
+    "updateTemporary": "Mark a feature flag as temporary or permanent.",
+    "updateClientSideFlagAvailability": "Change the availability of the flag to client-side SDKs.",
+    "updateDeprecated": "Mark the flag as deprecated.",
+    "updateGlobalArchived": "Archive or unarchive the flag globally.",
+    "updateOn": "Toggle a feature flag on or off.",
+    "updateTargets": "Modify the individual targets for a feature flag.",
+    "updateRules": "Adjust the custom targeting rules for a feature flag.",
+    "updateFallthrough": "Change the fallthrough behavior when no targeting rules are met.",
+    "updateOffVariation": "Set the variation returned when the flag is off.",
+    "updatePrerequisites": "Modify prerequisites for a feature flag.",
+    "updateScheduledChanges": "Schedule future changes to the feature flag settings.",
+    "updateFlagDefaultVariations": "Change the default variations used in a new environment for the flag.",
+    "bypassRequiredApproval": "Bypass any required approval processes in the environment for changes.",
+    "applyApprovalRequest": "Apply an approved request related to flag changes.",
+    "createApprovalRequest": "Create a request for approval of flag changes.",
+    "deleteApprovalRequest": "Remove an existing approval request.",
+    "reviewApprovalRequest": "Review an approval request for flag changes.",
+    "updateFlagRuleDescription": "Update descriptions of specific flag rules.",
+    "updateExpiringTargets": "Modify expiring targeting rules for individual users or segments.",
+    "cloneFlag": "Clone a flag to create a new one with similar settings (needs permissions in both source and destination).",
+    "copyFlagConfigFrom": "Copy configurations from another flag (source permissions needed).",
+    "copyFlagConfigTo": "Copy configurations to another flag (destination permissions needed).",
+    "addReleasePipeline": "Add a flag to a release pipeline. This creates a release.",
+    "removeReleasePipeline": "Remove a flag from a release pipeline. This deletes a release.",
+    "replaceReleasePipeline": "Move a flag to a different release pipeline.",
+    "updateClientSideFlagAvailability": "Change whether the flag is available to client-side SDKs.",
+    "updateDescription": "Change the description of a flag.",
+    "updateDeprecated": "Change whether a flag is deprecated.",
+    "updateFlagConfigMigrationSettings": "Update a feature flag's consistency check ratio.",
+    "updateFlagCustomProperties": "Update custom properties attached to a flag.",
+    "updateFlagDefaultVariations": "Change the default flag variations used by newly-created environments for a flag.",
+    "updateFlagVariations": "Change the flag's variations.",
+    "updateGlobalArchived": "Change whether a flag is archived.",
+    "updateIncludeInSnippet": "Change whether the flag is available to front-end code with the JavaScript SDK.",
+    "updateName": "Change the name of a flag.",
+    "updateReleasePhaseCompleted": "Update a release phase as complete.",
+    "updateTags": "Update tags associated with a flag.",
+    "updateTemporary": "Mark a flag temporary or permanent."
+  },
 
+  "segment": {
+    "createSegment": "Create new segments.",
+    "deleteSegment": "Delete segments.",
+    "updateDescription": "Update a segment's description.",
+    "updateExcluded": "Change a segment's excluded users.",
+    "updateExpiringRules": "Change a segment's expiring custom targeting rules.",
+    "updateExpiringTargets": "Change a segment's expiring individual user targeting rules.",
+    "updateIncluded": "Change a segment's included users.",
+    "updateName": "Change the name of a segment.",
+    "updateRules": "Change a segment's custom targeting rules.",
+    "updateScheduledChanges": "Change the scheduled updates on a segment.",
+    "updateTags": "Change the tags associated with a segment."
+  },
+  "user": {
+    "deleteUser": "Delete a user."
+  },
+  "member": {
+    "createMember": "Add a new account member to an account.",
+    "deleteMember": "Remove an account member from an account.",
+    "sendMfaRecoveryCode": "Send an account member their MFA recovery code.",
+    "sendMfaRequest": "Send an account member a request to enable MFA.",
+    "updateCustomRole": "Update an account member's custom roles.",
+    "updateRole": "Update an account member's built-in role."
+  },
 
-    ,"team":{
-        
-        "createTeam": "Create a new team."
-        ,"deleteTeam": "Delete a team."
-        ,"updateTeamCustomRoles": "Add or remove custom roles from a team."
-        ,"updateTeamDescription": "Update the description of a team."
-        ,"updateTeamMembers": "Add or remove members to or from a team."
-        ,"updateTeamName": "Change the name of a team."
-        ,"viewTeam": "If set to deny, anyone impacted by this policy can neither view nor modify a team."
-    }
+  "role": {
+    "createRole": "Create new custom roles.",
+    "deleteRole": "Delete a custom role.",
+    "updateDescription": "Update a custom role 's description.",
+    "updateMembers": "Add or remove users from a custom role(equivalent to updateCustomRole on account members).",
+    "updateName": "Update a custom role 's name.",
+    "updatePolicy": "Update a custom role 's policy."
+  },
 
-    ,"token":{
-        "createAccessToken": "Create a personal access token.All custom roles can take this action by default."
-        ,"deleteAccessToken": "Delete a personal access token."
-        ,"resetAccessToken": "Reset a personal access token 's secret key."
-        ,"updateAccessTokenDescription": "Change the description of a personal access token."
-        ,"updateAccessTokenName": "Change the name of a personal access token."
-        ,"updateAccessTokenPolicy": "Change the policy filter of a personal access token."
-    }
+  "team": {
+    "createTeam": "Create a new team.",
+    "deleteTeam": "Delete a team.",
+    "updateTeamCustomRoles": "Add or remove custom roles from a team.",
+    "updateTeamDescription": "Update the description of a team.",
+    "updateTeamMembers": "Add or remove members to or from a team.",
+    "updateTeamName": "Change the name of a team.",
+    "viewTeam": "If set to deny, anyone impacted by this policy can neither view nor modify a team."
+  },
 
+  "token": {
+    "createAccessToken": "Create a personal access token.All custom roles can take this action by default.",
+    "deleteAccessToken": "Delete a personal access token.",
+    "resetAccessToken": "Reset a personal access token 's secret key.",
+    "updateAccessTokenDescription": "Change the description of a personal access token.",
+    "updateAccessTokenName": "Change the name of a personal access token.",
+    "updateAccessTokenPolicy": "Change the policy filter of a personal access token."
+  },
 
-    ,"service-token":{
-        "createAccessToken": "Create a service access token.All custom roles can take this action by default."
-        ,"deleteAccessToken": "Delete a service access token."
-        ,"resetAccessToken": "Reset a service access token 's secret key."
-        ,"updateAccessTokenDescription": "Change the description of a service access token."
-        ,"updateAccessTokenName": "Change the name of a service access token."
-    }
+  "service-token": {
+    "createAccessToken": "Create a service access token.All custom roles can take this action by default.",
+    "deleteAccessToken": "Delete a service access token.",
+    "resetAccessToken": "Reset a service access token 's secret key.",
+    "updateAccessTokenDescription": "Change the description of a service access token.",
+    "updateAccessTokenName": "Change the name of a service access token."
+  },
 
-    ,"metric":{
-        "createMetric": "Create metrics."
-        ,"deleteMetric": "Delete metrics."
-        ,"updateDescription": "Change the description of a metric."
-        ,"updateEventKey": "Change the event key for a custom metric."
-        ,"updateMaintainer": "Change the metric 's maintainer."
-        ,"updateName": "Change the name of a metric."
-        ,"updateNumeric": "Mark a custom metric as numeric or non - numeric."
-        ,"updateNumericSuccess": "Update the success criteria for a numeric custom metric."
-        ,"updateNumericUnit": "Update the unit displayed in results for a numeric custom metric."
-        ,"updateOn": "Mark a metric as active or inactive."
-        ,"updateSelector": "Update the CSS selector for a click metric."
-        ,"updateTags": "Change the tags associated with a metric."
-        ,"updateUrls": "Update the URLs for a click or page view metric."
-    }
+  "metric": {
+    "createMetric": "Create metrics.",
+    "deleteMetric": "Delete metrics.",
+    "updateDescription": "Change the description of a metric.",
+    "updateEventKey": "Change the event key for a custom metric.",
+    "updateMaintainer": "Change the metric 's maintainer.",
+    "updateName": "Change the name of a metric.",
+    "updateNumeric": "Mark a custom metric as numeric or non - numeric.",
+    "updateNumericSuccess": "Update the success criteria for a numeric custom metric.",
+    "updateNumericUnit": "Update the unit displayed in results for a numeric custom metric.",
+    "updateOn": "Mark a metric as active or inactive.",
+    "updateSelector": "Update the CSS selector for a click metric.",
+    "updateTags": "Change the tags associated with a metric.",
+    "updateUrls": "Update the URLs for a click or page view metric."
+  },
 
-    ,"webhook":{
-       "createWebhook": "Create new webhooks."
-       ,"deleteWebhook": "Delete existing webhooks."
-       ,"updateName": "Change the name of webhook configurations."
-       ,"updateOn": "Enable and disabled existing webhooks."
-       ,"updateQuery": "Modify webhook query."
-       ,"updateSecret": "Modify an existing webhook 's signing secret."
-       ,"updateStatements": "Modify webhook policy statements."
-       ,"updateTags": "Modify webhook tags."
-       ,"updateUrl": "Change the URL for a webhook."
-   }
+  "webhook": {
+    "createWebhook": "Create new webhooks.",
+    "deleteWebhook": "Delete existing webhooks.",
+    "updateName": "Change the name of webhook configurations.",
+    "updateOn": "Enable and disabled existing webhooks.",
+    "updateQuery": "Modify webhook query.",
+    "updateSecret": "Modify an existing webhook 's signing secret.",
+    "updateStatements": "Modify webhook policy statements.",
+    "updateTags": "Modify webhook tags.",
+    "updateUrl": "Change the URL for a webhook."
+  },
 
-    ,"integration":{
-      "createIntegration": "Create and configure new third - party integrations."
-      ,"deleteIntegration": "Delete existing third - party integrations."
-      ,"updateConfiguration": "Modify existing third - party integration configurations."
-      ,"updateName": "Change the name of third - party integration configurations."
-      ,"updateOn": "Enable and disabled existing third - party integrations."
-      ,"validateConnection": "Validate the third - party connection."
-    }
-    ,"relay-proxy-config":{
-        "createRelayAutoConfiguration": "Create a Relay Proxy with automatic configuration enabled."
-        ,"deleteRelayAutoConfiguration": "Delete the Relay Proxy with automatic configuration enabled."
-        ,"resetRelayAutoConfiguration": "Reset the configuration of the Relay Proxy with automatic configuration enabled."
-        ,"updateRelayAutoConfigurationName": "Change the Relay Proxy with automatic configuration 's name."
-        ,"updateRelayAutoConfigurationPolicy": "Change the policies associated with the Relay Proxy with automatic configuration"
-    }
-    ,"destination":{
-        "createDestination":	"Create a new Data Export destination."
-        ,"deleteDestination":	"Delete a Data Export destination."
-        ,"updateConfiguration":	"Change a Data Export destination."
-        ,"updateName":	"Change the name of a Data Export destination."
-        ,"updateOn":	"Flip the on/off status of a Data Export destination."
-    }
-    ,"code-reference-repository":{
-        "createCodeRefsRepository":	"Connect a Git repository."
-        ,"deleteCodeRefsRepository":	"Delete a Git repository connection."
-        ,"updateCodeRefsRepositoryBranches":	"Update the stored branch data for a Git repository connection."
-        ,"updateCodeRefsRepositoryConfiguration":	"Update a Git repository connection configuration."
-        ,"updateCodeRefsRepositoryName":	"Update a Git repository connection name."
-        ,"updateCodeRefsRepositoryOn":	"Flip the on/off status of a Git repository connection."
-    }
-
+  "integration": {
+    "createIntegration": "Create and configure new third - party integrations.",
+    "deleteIntegration": "Delete existing third - party integrations.",
+    "updateConfiguration": "Modify existing third - party integration configurations.",
+    "updateName": "Change the name of third - party integration configurations.",
+    "updateOn": "Enable and disabled existing third - party integrations.",
+    "validateConnection": "Validate the third - party connection."
+  },
+  "relay-proxy-config": {
+    "createRelayAutoConfiguration": "Create a Relay Proxy with automatic configuration enabled.",
+    "deleteRelayAutoConfiguration": "Delete the Relay Proxy with automatic configuration enabled.",
+    "resetRelayAutoConfiguration": "Reset the configuration of the Relay Proxy with automatic configuration enabled.",
+    "updateRelayAutoConfigurationName": "Change the Relay Proxy with automatic configuration 's name.",
+    "updateRelayAutoConfigurationPolicy": "Change the policies associated with the Relay Proxy with automatic configuration"
+  },
+  "destination": {
+    "createDestination": "Create a new Data Export destination.",
+    "deleteDestination": "Delete a Data Export destination.",
+    "updateConfiguration": "Change a Data Export destination.",
+    "updateName": "Change the name of a Data Export destination.",
+    "updateOn": "Flip the on/off status of a Data Export destination."
+  },
+  "code-reference-repository": {
+    "createCodeRefsRepository": "Connect a Git repository.",
+    "deleteCodeRefsRepository": "Delete a Git repository connection.",
+    "updateCodeRefsRepositoryBranches": "Update the stored branch data for a Git repository connection.",
+    "updateCodeRefsRepositoryConfiguration": "Update a Git repository connection configuration.",
+    "updateCodeRefsRepositoryName": "Update a Git repository connection name.",
+    "updateCodeRefsRepositoryOn": "Flip the on/off status of a Git repository connection."
+  }
 }
